@@ -1,37 +1,44 @@
 import { unknownTrackImageUri } from '@/constants/images'
 import { colors, fontSize } from '@/constants/tokens'
 import { defaultStyles } from '@/styles'
+import { Entypo } from '@expo/vector-icons'
 import React from 'react'
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
+import { Track, useActiveTrack } from 'react-native-track-player'
 
 export type TrackListItemProps = {
-	track: {
-		title: string
-		image?: string
-		artist?: string
-	}
+	track: Track
+	onTrackSelect: (track: Track) => void
 }
 
-const TrackListItem = ({ track }: TrackListItemProps) => {
-	const isActivedTrack = false
+const TrackListItem = ({ track, onTrackSelect: handleTrackSelect }: TrackListItemProps) => {
+	const isActivedTrack = useActiveTrack()?.url === track.url
 
 	return (
-		<TouchableHighlight>
-			<View>
-				<View style={styles.trackItemContainer}>
-					<View>
-						<FastImage
-							source={{
-								uri: track.image ?? unknownTrackImageUri,
-								priority: FastImage.priority.normal,
-							}}
-							style={{
-								...styles.trackArtworkImage,
-								opacity: isActivedTrack ? 0.6 : 1,
-							}}
-						/>
-					</View>
+		<TouchableHighlight onPress={() => handleTrackSelect(track)}>
+			<View style={styles.trackItemContainer}>
+				<View>
+					<FastImage
+						source={{
+							uri: track.artwork ?? unknownTrackImageUri,
+							priority: FastImage.priority.normal,
+						}}
+						style={{
+							...styles.trackArtworkImage,
+							opacity: isActivedTrack ? 0.6 : 1,
+						}}
+					/>
+				</View>
+
+				<View
+					style={{
+						flex: 1,
+						flexDirection: 'row',
+						justifyContent: 'space-between',
+						alignItems: 'center',
+					}}
+				>
 					<View
 						style={{
 							width: '100%',
@@ -52,6 +59,7 @@ const TrackListItem = ({ track }: TrackListItemProps) => {
 							</Text>
 						)}
 					</View>
+					<Entypo name="dots-three-horizontal" size={18} color={colors.icon} />
 				</View>
 			</View>
 		</TouchableHighlight>
