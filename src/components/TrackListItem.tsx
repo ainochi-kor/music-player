@@ -18,8 +18,8 @@ const TrackListItem = ({ track }: TrackListItemProps) => {
 
 	return (
 		<TouchableHighlight>
-			<View style={styles.trackItemContainer}>
-				<View>
+			<View>
+				<View style={styles.trackItemContainer}>
 					<View>
 						<FastImage
 							source={{
