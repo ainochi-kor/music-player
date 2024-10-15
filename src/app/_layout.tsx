@@ -35,6 +35,16 @@ const RootNavigation = () => {
 					headerShown: false,
 				}}
 			/>
+			<Stack.Screen
+				name="player"
+				options={{
+					presentation: 'card',
+					gestureEnabled: true,
+					gestureDirection: 'vertical',
+					animationDuration: 400,
+					headerShown: false,
+				}}
+			/>
 		</Stack>
 	)
 }
