@@ -1,6 +1,7 @@
 import { MovingText } from '@/components/MovingText'
 import { PlayerControls } from '@/components/PlayerControls'
 import PlayerProgressBar from '@/components/PlayerProgressBar'
+import PlayerRepeatToggle from '@/components/PlayerRepeatToggle'
 import PlayerVolumeBar from '@/components/PlayerVolumeBar'
 import { unknownTrackImageUri } from '@/constants/images'
 import { colors, fontSize, screenPadding } from '@/constants/tokens'
@@ -87,15 +88,15 @@ const PlayerScreen = () => {
 								</Text>
 							)}
 						</View>
-						<PlayerProgressBar style={{marginTop: 32}} />
+						<PlayerProgressBar style={{ marginTop: 32 }} />
 
-						<PlayerControls style={{marginTop: 40}} />
+						<PlayerControls style={{ marginTop: 40 }} />
 					</View>
 
-					<PlayerVolumeBar style={{marginTop: "auto", marginBottom: 30}} />
+					<PlayerVolumeBar style={{ marginTop: 'auto', marginBottom: 30 }} />
 
 					<View style={utilsStyles.centerRow}>
-						<PlayerRepeatToggle size={30} style={{marginBottom: 6}} />
+						<PlayerRepeatToggle size={30} style={{ marginBottom: 6 }} />
 					</View>
 				</View>
 			</View>
