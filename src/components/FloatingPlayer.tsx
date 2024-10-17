@@ -1,6 +1,7 @@
 import { unknownTrackImageUri } from '@/constants/images'
 import { useLastActiveTrack } from '@/hooks/useLastActiveTrack'
 import { defaultStyles } from '@/styles'
+import { useRouter } from 'expo-router'
 import { StyleSheet, TouchableOpacity, View, ViewProps } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import { Track, useActiveTrack } from 'react-native-track-player'
@@ -8,22 +9,28 @@ import { MovingText } from './MovingText'
 import { PlayPauseButton, SkipToNextButton } from './PlayerControls'
 
 const FloatingPlayer = ({ style }: ViewProps) => {
+	const router = useRouter()
+
 	const activeTrack = useActiveTrack()
 	const lastActiveTrack = useLastActiveTrack()
+	const handlePress = () => router.navigate('/player')
+	const displayedTrack: Track | null = activeTrack ?? lastActiveTrack
 
-	if (!activeTrack) return null
-
-	const displayedTrack: Track = activeTrack ?? lastActiveTrack
+	if (!displayedTrack) return null
 
 	return (
-		<TouchableOpacity activeOpacity={0.9} style={[styles.container, style]}>
+		<TouchableOpacity onPress={handlePress} activeOpacity={0.9} style={[styles.container, style]}>
 			<>
 				<FastImage
-					source={{ uri: activeTrack.artwork ?? unknownTrackImageUri }}
+					source={{ uri: displayedTrack.artwork ?? unknownTrackImageUri }}
 					style={styles.trackArtworkImage}
 				/>
 				<View style={styles.trackTitleContainer}>
-					<MovingText style={styles.trackTitle} text={displayedTrack.title ?? ''} animationThreshold={25} />
+					<MovingText
+						style={styles.trackTitle}
+						text={displayedTrack.title ?? ''}
+						animationThreshold={25}
+					/>
 				</View>
 				<View style={styles.trackControlsContainer}>
 					<PlayPauseButton iconSize={24} />

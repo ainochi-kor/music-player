@@ -13,6 +13,11 @@ export const defaultStyles = StyleSheet.create({
 })
 
 export const utilsStyles = StyleSheet.create({
+	centeredRow: {
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
 	itemSeparator: {
 		borderColor: colors.textMuted,
 		borderWidth: StyleSheet.hairlineWidth,
@@ -31,4 +36,5 @@ export const utilsStyles = StyleSheet.create({
 		marginTop: 40,
 		opacity: 0.3,
 	},
+	container: {},
 })
