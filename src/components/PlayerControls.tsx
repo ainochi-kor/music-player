@@ -24,7 +24,7 @@ export const PlayerControls = ({ style }: PlayerControlsProps) => {
 	)
 }
 
-export const PlayPauseButton = ({ styles, iconSize }: PlayerButtonProps) => {
+export const PlayPauseButton = ({ styles, iconSize = 48 }: PlayerButtonProps) => {
 	const { playing } = useIsPlaying()
 
 	return (
@@ -55,14 +55,13 @@ export const SkipToPreviousButton = ({ iconSize = 30 }: PlayerButtonProps) => {
 	)
 }
 
-
 const styles = StyleSheet.create({
-	 container: {
+	container: {
 		width: '100%',
-	 }, 
-	 row: {
+	},
+	row: {
 		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
-	 }
+	},
 })
