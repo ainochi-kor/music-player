@@ -1,6 +1,7 @@
 import TracksList from '@/components/TracksList'
 import { screenPadding } from '@/constants/tokens'
 import { trackTitleFilter } from '@/helpers/filter'
+import { generateTrackListId } from '@/helpers/miscellaneous'
 import { useNavigationSearch } from '@/hooks/useNavigationSearch'
 import { useTracks } from '@/store/library'
 import { defaultStyles } from '@/styles'
@@ -27,7 +28,11 @@ const SongsScreen = () => {
 				contentInsetAdjustmentBehavior="automatic"
 				style={{ paddingHorizontal: screenPadding.horizontal }}
 			>
-				<TracksList tracks={filteredTracks} scrollEnabled={false} />
+				<TracksList
+					id={generateTrackListId('songs', search)}
+					tracks={filteredTracks}
+					scrollEnabled={false}
+				/>
 			</ScrollView>
 		</View>
 	)
