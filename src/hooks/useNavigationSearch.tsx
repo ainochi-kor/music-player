@@ -13,7 +13,7 @@ export const useNavigationSearch = ({
 }: {
 	searchBarOptions?: SearchBarProps
 }) => {
-	const [search, setSearch] = useState<string>('')
+	const [search, setSearch] = useState('')
 
 	const navigation = useNavigation()
 
