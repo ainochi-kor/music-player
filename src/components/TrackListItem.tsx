@@ -1,21 +1,25 @@
 import { unknownTrackImageUri } from '@/constants/images'
 import { colors, fontSize } from '@/constants/tokens'
 import { defaultStyles } from '@/styles'
-import { Entypo, Ionicons } from '@expo/vector-icons'
-import React from 'react'
+import { Ionicons } from '@expo/vector-icons'
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import LoaderKit from 'react-native-loader-kit'
 import { Track, useActiveTrack, useIsPlaying } from 'react-native-track-player'
+import { StopPropagation } from './utils/StopPropagation'
 
-export type TrackListItemProps = {
+export type TracksListItemProps = {
 	track: Track
 	onTrackSelect: (track: Track) => void
 }
 
-const TrackListItem = ({ track, onTrackSelect: handleTrackSelect }: TrackListItemProps) => {
+export const TracksListItem = ({
+	track,
+	onTrackSelect: handleTrackSelect,
+}: TracksListItemProps) => {
 	const { playing } = useIsPlaying()
-	const isActivedTrack = useActiveTrack()?.url === track.url
+
+	const isActiveTrack = useActiveTrack()?.url === track.url
 
 	return (
 		<TouchableHighlight onPress={() => handleTrackSelect(track)}>
@@ -28,10 +32,11 @@ const TrackListItem = ({ track, onTrackSelect: handleTrackSelect }: TrackListIte
 						}}
 						style={{
 							...styles.trackArtworkImage,
-							opacity: isActivedTrack ? 0.6 : 1,
+							opacity: isActiveTrack ? 0.6 : 1,
 						}}
 					/>
-					{isActivedTrack &&
+
+					{isActiveTrack &&
 						(playing ? (
 							<LoaderKit
 								style={styles.trackPlayingIconIndicator}
@@ -56,34 +61,35 @@ const TrackListItem = ({ track, onTrackSelect: handleTrackSelect }: TrackListIte
 						alignItems: 'center',
 					}}
 				>
-					<View
-						style={{
-							width: '100%',
-						}}
-					>
+					{/* Track title + artist */}
+					<View style={{ width: '100%' }}>
 						<Text
 							numberOfLines={1}
 							style={{
 								...styles.trackTitleText,
-								color: isActivedTrack ? colors.primary : colors.text,
+								color: isActiveTrack ? colors.primary : colors.text,
 							}}
 						>
 							{track.title}
 						</Text>
+
 						{track.artist && (
 							<Text numberOfLines={1} style={styles.trackArtistText}>
 								{track.artist}
 							</Text>
 						)}
 					</View>
-					<Entypo name="dots-three-horizontal" size={18} color={colors.icon} />
+
+					<StopPropagation>
+						{/* <TrackShortcutsMenu track={track}>
+							<Entypo name="dots-three-horizontal" size={18} color={colors.icon} />
+						</TrackShortcutsMenu> */}
+					</StopPropagation>
 				</View>
 			</View>
 		</TouchableHighlight>
 	)
 }
-
-export default TrackListItem
 
 const styles = StyleSheet.create({
 	trackItemContainer: {
@@ -91,6 +97,18 @@ const styles = StyleSheet.create({
 		columnGap: 14,
 		alignItems: 'center',
 		paddingRight: 20,
+	},
+	trackPlayingIconIndicator: {
+		position: 'absolute',
+		top: 18,
+		left: 16,
+		width: 16,
+		height: 16,
+	},
+	trackPausedIndicator: {
+		position: 'absolute',
+		top: 14,
+		left: 14,
 	},
 	trackArtworkImage: {
 		borderRadius: 8,
@@ -108,17 +126,5 @@ const styles = StyleSheet.create({
 		color: colors.textMuted,
 		fontSize: 14,
 		marginTop: 4,
-	},
-	trackPlayingIconIndicator: {
-		position: 'absolute',
-		top: 18,
-		left: 18,
-		width: 16,
-		height: 16,
-	},
-	trackPausedIndicator: {
-		position: 'absolute',
-		top: 14,
-		left: 14,
 	},
 })

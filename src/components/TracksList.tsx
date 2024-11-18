@@ -1,4 +1,3 @@
-import TrackListItem from '@/components/TrackListItem'
 import { unknownTrackImageUri } from '@/constants/images'
 import { useQueue } from '@/store/queue'
 import { utilsStyles } from '@/styles'
@@ -7,6 +6,7 @@ import { FlatList, FlatListProps, Text, View } from 'react-native'
 import FastImage from 'react-native-fast-image'
 import TrackPlayer, { Track } from 'react-native-track-player'
 import QueueControls from './QueueControls'
+import { TracksListItem } from './TrackListItem'
 
 export type TracksListProps = Partial<FlatListProps<Track>> & {
 	tracks: Track[]
@@ -74,7 +74,7 @@ const TracksList = ({
 			}
 			ItemSeparatorComponent={ItemDivider}
 			ListFooterComponent={ItemDivider}
-			ListEmptyComponent={
+			ListEmptyComponent={() => (
 				<View>
 					<Text style={utilsStyles.emptyContentText}>No songs found</Text>
 					<FastImage
@@ -82,9 +82,9 @@ const TracksList = ({
 						style={utilsStyles.emptyContentImage}
 					/>
 				</View>
-			}
+			)}
 			renderItem={({ item: track }) => (
-				<TrackListItem track={track} onTrackSelect={handleTrackSelect} />
+				<TracksListItem track={track} onTrackSelect={handleTrackSelect} />
 			)}
 			{...flatlistProps}
 		/>

@@ -21,7 +21,7 @@ const FavoritesScreen = () => {
 		if (!search) return favoriteTracks
 
 		return favoriteTracks.filter(trackTitleFilter(search))
-	}, [])
+	}, [favoriteTracks, search])
 
 	return (
 		<View style={defaultStyles.container}>
@@ -32,7 +32,7 @@ const FavoritesScreen = () => {
 				<TracksList
 					id={generateTrackListId('favorites', search)}
 					scrollEnabled={false}
-					tracks={favoriteTracks}
+					tracks={filteredFavoritesTracks}
 				/>
 			</ScrollView>
 		</View>
